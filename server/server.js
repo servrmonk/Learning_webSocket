@@ -35,9 +35,10 @@ app.get("/login", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  //already socket milega
-  console.log("User connected");
+  //already socket milega as a parameter
+  console.log("User Connected");
   console.log("Id socket.id ", socket.id);
+  
 });
 
 server.listen(port, () => { //app.listen creates an instance, app.listen creates internally server on http,  so use server.listen for it listen on io
