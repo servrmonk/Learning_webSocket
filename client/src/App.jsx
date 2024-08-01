@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import { Button, Container, TextField, Typography } from "@mui/material";
 
 function App() {
-  const socket = io("http://localhost:3000");
+  // const socket = io("http://localhost:3000");
+
+  //socket is changing if the vlaue of message is changign the component is rerender and the socket is changing evertime so we will use usememo Because again and again socket is changing
+
+  const socket = useMemo(() => io("http://localhost:3000"), []);
 
   const [message, setMessage] = useState("");
 
