@@ -34,19 +34,21 @@ app.get("/login", (req, res) => {
     .json({ message: "Login Success" });
 });
 
+
+
 io.on("connection", (socket) => {
   console.log("User Connected", socket.id);
 
   socket.on("message", (data) => {
     console.log("Message data ", data);
-    // io.emit("received-message-event", data); both party will get the msg
-    // socket.broadcast.emit("received-message-event", data); //now  msg that i sent will not available in my chat or i can't see the msg
-    // now i want that abc me se a -> c se chat kre to now i will use rooms ka particular room me vejeng msg 
 
-    // io.to(data.room).emit("received-message-event", data.message); //instead of data.room u can use extract {message,room}
-    // or simple socket.to use kro 
     socket.to(data.room).emit("received-message-event", data.message); //instead of data.room u can use extract {message,room}
 
+    // ab room specific join krwana hai
+  });
+  socket.on("join-room", (room) => {
+    socket.join(room);
+    console.log("User joined room ", room);
   });
 
   socket.on("disconnect", () => {
