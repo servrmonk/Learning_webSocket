@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 
 function App() {
-  const socket = io("http://localhost:3000"); //backend url , if u don't pass anything in io than it will check on default url means frontend url . allow cors
-  // console.log("Socket in app.jsx ",socket);
+  const socket = io("http://localhost:3000");
 
   useEffect(() => {
-    socket.on("connection", () => {
-      //connection i.e same event name that u put on the server.js
+    socket.on("connect", () => { //when connected
       console.log("Connected", socket.id);
-    }); //as connected it will trigerred
+    });
 
-   
+    socket.on("welcome", (s) => {
+      console.log(s);
+    });
   }, []);
 
   return <div>App</div>;
