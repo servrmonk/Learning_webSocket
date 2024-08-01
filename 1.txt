@@ -1,0 +1,47 @@
+6pack
+websocket: chat apk,real time communication/real time data transfer so we use web socket so instead of directly using web socket we use socket.io library
+
+socket.io is a library for web socket
+web socket is a communication protocol like http/ftp/smtp
+
+Http: client(from browser) and server(main backend code) client req to server and server give response one way communication sirf client hi request kr sakta hai server nai 
+WebSocket:ek connection establish hoga server and client k bich me server <--------> client isme client and server kuch v data vej sakta hai so ye hai duplex cummunication , ex client req v nai kr raa hai lekin connection bna hua hai  to server ka jb mn kre to wo vej sakta hai ex instagram notification case tum baar baar check nai krte ho wo apne aap hi notification dikha deta hai to wo hm web socket ka use krte hai notification push krne k lie
+
+server me ke fun bna lie notify jo ki data dega client me hm ise ek fun me listen krenge
+websocket me server and client dono data vej sakte hai 
+
+to hm directly websocket likhene to dikkat hogi to ek library hai socket.io isi k help se 
+
+Socket.io : 
+code me likhenge io to im referring to this circut check screenshot 
+if main likhunga ki socket means individual user 
+hr socket ki ek id assign hoti hai jisse socket.id se accesskr sakta hoon
+
+emit : means event trigger kr raa hoon this event(data)
+on : ek handle listener lagaunga thisevent(data) listen krega event ko jo emit krunga
+
+ex: 
+server : yaha se emit krunga io.emit(event1,"Hii") //event1 is the name kuch v de sakte ho .connection aur disconnection ye do event hai 
+client : socket.on(event1,(msg)=>{ console.log(msg) })
+jaruri nai ki server se emit krunga client se v kr sakte ho 
+emit krne ka ek time hoga ki particular kis time pr emit krunga
+
+server : socket.on(btn , number=> print(number))
+client: socket.emit(btn,4)
+
+io.emit : pr jab main kahunga io.emit to svi socket ko msg jaega
+socket.emit : to particular jis v socket ki baat ho rai hai particular usi socket ko msg jaega
+let's suppose isko chor k sb ko msg krna hai so socket.broadcast.emit
+
+emit: this event (data)
+
+on : thisevent(data)
+
+broadcast: thisevent(data) ek ko chor kr sb ko ja raa hai 
+
+to: personal individually msg kr sakte ho socket A ko socket c se krni hai to kaise krega . socket b ko a se krni hai to kaise krega uski lie hai to , individually hr user ek room k under hai room soket k under aur us room ki id hai to hme a ko c se baat krni hai to socket.to().emit() to me room id dena hai to me jisko vejna hai particular uski id de do . so to hogya to trigger event to particular room 
+
+join: ab main chahta hoon ki socket A user d e f g ko msg kre to  to hm in pancho ko A d e f g ko ek room me daal sakte hai individually to hai hi ek room me fir jo v is room me msg trigger krenge wo in 5cho ko pahuch jaega .to join people  socket.join(group/roomname)
+
+in frontend react and in backend node 
+https://socket.io/docs/v4/tutorial/introduction
