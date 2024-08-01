@@ -34,7 +34,10 @@ app.get("/login", (req, res) => {
     .json({ message: "Login Success" });
 });
 
-
+// using middleware
+io.use((socket, next) => {
+  next() //u can perform operations
+});
 
 io.on("connection", (socket) => {
   console.log("User Connected", socket.id);
