@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
-import { Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 function App() {
   // const socket = io("http://localhost:3000");
@@ -12,7 +19,9 @@ function App() {
   const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
   const [socketId, setSocketId] = useState("");
+  const [allMsgs, setAllMsgs] = useState([]);
 
+  console.log("All msgs ", allMsgs);
   useEffect(() => {
     socket.on("connect", () => {
       //when connected
@@ -23,6 +32,7 @@ function App() {
     socket.on("received-message-event", (data) => {
       //write this event in backend first and than in frontend
       console.log("Received data in app.jsx ", data);
+      setAllMsgs((msg) => [...msg, data]);
     });
 
     socket.on("welcome", (s) => {
@@ -36,11 +46,12 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit("message", { message, room });
-    setMessage("")
+    setMessage("");
   };
 
   return (
     <Container>
+      <Box sx={{ height: 200 }} />
       <Typography variant="h6" component="div" gutterBottom>
         {socketId}
       </Typography>
@@ -63,6 +74,13 @@ function App() {
           Send
         </Button>
       </form>
+      <Stack>
+        {allMsgs.map((m, i) => (
+          <Typography key={i} variant="h6" component="div" gutterBottom>
+            {m}
+          </Typography>
+        ))}
+      </Stack>
     </Container>
   );
 }
