@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { Button, Container, TextField, Typography } from "@mui/material";
 
 function App() {
   const socket = io("http://localhost:3000");
+
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -18,7 +21,30 @@ function App() {
     };
   }, []);
 
-  return <div>App</div>;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    socket.emit("message", message);
+  };
+
+  return (
+    <Container>
+      <Typography variant="h3" component="div" gutterBottom>
+        Welcome to Socket.io
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          id="outlined-basic"
+          label="Outlined"
+          variant="outlined"
+        />
+        <Button type="submit" variant="contained" color="primary">
+          Send
+        </Button>
+      </form>
+    </Container>
+  );
 }
 
 export default App;

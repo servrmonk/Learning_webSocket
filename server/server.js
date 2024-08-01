@@ -35,13 +35,14 @@ app.get("/login", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("User Connected");
-  console.log("Id socket.id ", socket.id);
-  // socket.emit("welcome", `Welcome to the server ${socket.id}`);
-  // socket.broadcast.emit("welcome", `Welcome to the server ${socket.id}`); //jo socket hai usko msg nai jaega baaki sbko jaega
-  // usually hm listener lagate hai and emit frontend se krte hai  aur jo listener hai usse emit krte hai
+  console.log("User Connected", socket.id);
+
+  socket.on("message", (data) => {
+    console.log("Message data ", data);
+  });
+
   socket.on("disconnect", () => {
-    console.log("User disconnected :)", socket.id); //in frontend  in useeffect socket.disconnect in return keyword or cleaner function
+    console.log("User disconnected :( ", socket.id);
   });
 });
 
